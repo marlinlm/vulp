@@ -133,6 +133,28 @@ cc_library(
     include_prefix = "vulp/actuation",
 )
 
+
+cc_library(
+    name = "lessie_interface",
+    hdrs = [
+        "LessieInterface.h",
+    ],
+    srcs = select({
+        "//:pi64_config": ["LessieInterface.cpp"],
+        "//conditions:default": [],
+    }),
+    deps = [
+        "//vulp/utils:realtime",
+        ":interface",
+    ] + select({
+        "//:pi64_config": [
+            "//vulp/actuation/wiringpi",
+        ],
+        "//conditions:default": [],
+    })
+)
+
+
 cc_library(
     name = "actuation",
     deps = [

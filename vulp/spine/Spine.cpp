@@ -125,6 +125,7 @@ void Spine::begin_cycle() {
   state_cycle_beginning_ = state_machine_.state();
 
   // Read input dictionary if applicable
+  // update woring_dict_ accordingly
   if (state_machine_.state() == State::kReset) {
     Dictionary& config = working_dict_("config");
     const char* data = agent_interface_.data();
@@ -173,6 +174,7 @@ void Spine::cycle_actuation() {
     }
 
     // 2. Action
+    // copy the woring_dict_ action to actuation_.commands_
     if (state_machine_.state() == State::kSendStops ||
         state_machine_.state() == State::kShutdown) {
       actuation_.write_stop_commands();
